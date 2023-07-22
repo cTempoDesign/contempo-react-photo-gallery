@@ -17,6 +17,7 @@ const Template: ComponentStory<typeof Gallery> = (args: GalleryProps) => (
 export const HelloWorld = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 HelloWorld.args = {
+  lazy: true,
   images: [
     {
       path: "https://www.gstatic.com/webp/gallery/4.sm.jpg",
