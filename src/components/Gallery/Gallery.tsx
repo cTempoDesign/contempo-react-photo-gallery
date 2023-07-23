@@ -1,5 +1,5 @@
 import React from "react";
-import "Gallery.scss";
+import "./Gallery.css";
 
 export type PhotoConfig = {
   path: string;
