@@ -1,4 +1,5 @@
 import React from "react";
+import "./Gallery.scss";
 
 export type PhotoConfig = {
   path: string;
@@ -13,17 +14,18 @@ export type GalleryProps = {
 
 const Gallery = ({ images, lazy }: GalleryProps) => {
   return (
-    <div>
-      {images.map((photo: PhotoConfig, index: number) => (
-        <div key={index}>
+    <div className="wrapper">
+      <div className="grid-container">
+        {images.map((photo: PhotoConfig, index: number) => (
           <img
+            style={{ width: "100%" }}
+            key={index}
             src={photo.path}
             alt={photo.alt}
             loading={lazy ? "lazy" : "eager"}
           />
-          ;
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
