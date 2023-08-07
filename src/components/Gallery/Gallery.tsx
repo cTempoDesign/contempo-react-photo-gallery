@@ -51,7 +51,7 @@ const Overlay: FC<OverlayProps> = ({
       <span onClick={onClose} className="close cursor">
         CLOSE
       </span>
-      <div className="modal-contempo">
+      <div className="image-container">
         {activeImageSourcesFromState.map((image, index) => (
           <img key={index} src={image.path} alt={image.alt} />
         ))}
