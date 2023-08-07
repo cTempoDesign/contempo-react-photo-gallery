@@ -10,3 +10,101 @@
     box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
     max-width: 100%;
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    /* Black background with opacity */
+    z-index: 9999;
+    /* To ensure the overlay is on top of all other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .modal-contempo {
+    position: relative;
+    background-color: black;
+    margin: auto;
+    padding: 0;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+.close {
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #999;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.image-button {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 50px;
+    cursor: pointer;
+    fill: white;
+    transform: translateY(-50%);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.image-button:hover {
+    fill: #999;
+}
+
+.image-button.prev {
+    left: 5%;
+
+    @media (max-width: 480px) {
+        left: -4%;
+    }
+
+    @media (min-width: 481px) and (max-width: 767px) {
+        left: -10%;
+    }
+}
+
+.image-button.next {
+    right: 5%;
+
+    @media (max-width: 480px) {
+        right: -4%;
+    }
+
+    @media (min-width: 481px) and (max-width: 767px) {
+        right: -10%;
+    }
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.image-container img {
+    border: none;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
