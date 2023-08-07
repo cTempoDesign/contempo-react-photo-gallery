@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import "./Gallery.css";
+import { ChevronLeft, ChevronRight } from "./ui/chevrons";
 
 export type PhotoConfig = {
   path: string;
@@ -15,38 +16,50 @@ export type GalleryProps = {
 
 export interface OverlayProps {
   onClose: () => void;
+  images: PhotoConfig[];
+  selectedIndex: number;
 }
 
 // Left Chevron Component
-const ChevronLeft: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-    <path d="M34.52 239.03L228.87 44.678c9.373-9.373 24.569-9.373 33.941 0l22.667 22.667c9.357 9.357 9.375 24.522.04 33.901L131.97 256l153.52 154.75c9.335 9.379 9.317 24.544-.04 33.901l-22.667 22.667c-9.373 9.373-24.569 9.373-33.941 0L34.52 272.97c-9.373-9.373-9.373-24.569 0-33.94z" />
-  </svg>
-);
 
-// Right Chevron Component
-const ChevronRight: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-    <path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.03 256 34.484 101.255c-9.335-9.379-9.317-24.544 .04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0l194.343 194.343c9.373 9.372 9.373 24.568.001 33.941z" />
-  </svg>
-);
+const Overlay: FC<OverlayProps> = ({
+  onClose,
+  images,
+  selectedIndex,
+}: OverlayProps) => {
+  const [currentImageIdx, setCurrentImagIdx] = useState(selectedIndex);
 
-const Overlay: FC<OverlayProps> = ({ onClose }) => {
+  const prevSlide = () => {
+    const resetToVeryBack = currentImageIdx === 0;
+    const index = resetToVeryBack ? images.length - 1 : currentImageIdx - 1;
+    setCurrentImagIdx(index);
+  };
+
+  const nextSlide = () => {
+    const resetIndex = currentImageIdx === images.length - 1;
+    const index = resetIndex ? 0 : currentImageIdx + 1;
+    setCurrentImagIdx(index);
+  };
+
+  const activeImageSourcesFromState = images.slice(
+    currentImageIdx,
+    currentImageIdx + 1
+  );
+
   return (
     <div id="imageOverlay" className="overlay">
       <span onClick={onClose} className="close cursor">
         CLOSE
       </span>
       <div className="modal-contempo">
-        <div className="mySlides responsive">
-          <div className="numbertext"></div>
-          <img className="responsive"></img>
-        </div>
+        {activeImageSourcesFromState.map((image, index) => (
+          <img key={index} src={image.path} alt={image.alt} />
+        ))}
         <div className="image-button prev">
-          <ChevronLeft />
+          <ChevronLeft onClick={prevSlide} />
         </div>
         <div className="image-button next">
-          <ChevronRight />
+          <ChevronRight onClick={nextSlide} />
         </div>
       </div>
     </div>
@@ -55,12 +68,18 @@ const Overlay: FC<OverlayProps> = ({ onClose }) => {
 
 const ContempoGallery = ({ images, lazy }: GalleryProps) => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onImageClick = (index: number) => {
+    setSelectedIndex(index);
+    setShowOverlay(true);
+  };
 
   return (
     <div className="wrapper">
       <div className="grid-container">
         {images.map((photo: PhotoConfig, index: number) => (
-          <span onClick={() => setShowOverlay(true)} key={index}>
+          <span onClick={() => onImageClick(index)} key={index}>
             <img
               style={{ width: "100%" }}
               src={photo.path}
@@ -69,8 +88,12 @@ const ContempoGallery = ({ images, lazy }: GalleryProps) => {
             />
           </span>
         ))}
-        {showOverlay && (
-          <Overlay onClose={() => setShowOverlay(false)}></Overlay>
+        {showOverlay && selectedIndex && (
+          <Overlay
+            onClose={() => setShowOverlay(false)}
+            images={images}
+            selectedIndex={selectedIndex}
+          ></Overlay>
         )}
       </div>
     </div>
