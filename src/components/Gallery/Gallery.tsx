@@ -1,3 +1,4 @@
+"use client";
 import React, { FC, useState } from "react";
 import "./Gallery.css";
 import { ChevronLeft, ChevronRight } from "./ui/chevrons";
