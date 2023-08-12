@@ -72,26 +72,10 @@
 
 .image-button.prev {
     left: 5%;
-
-    @media (max-width: 480px) {
-        left: -4%;
-    }
-
-    @media (min-width: 481px) and (max-width: 767px) {
-        left: -10%;
-    }
 }
 
 .image-button.next {
     right: 5%;
-
-    @media (max-width: 480px) {
-        right: -4%;
-    }
-
-    @media (min-width: 481px) and (max-width: 767px) {
-        right: -10%;
-    }
 }
 
 .image-container {
