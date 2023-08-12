@@ -21,30 +21,27 @@ export interface OverlayProps {
   selectedIndex: number;
 }
 
-// Left Chevron Component
-
 const Overlay: FC<OverlayProps> = ({
   onClose,
   images,
   selectedIndex,
 }: OverlayProps) => {
-  const [currentImageIdx, setCurrentImagIdx] = useState(selectedIndex);
-
+  const [currentImageIndex, setCurrentImageIndex] = useState(selectedIndex);
   const prevSlide = () => {
-    const resetToVeryBack = currentImageIdx === 0;
-    const index = resetToVeryBack ? images.length - 1 : currentImageIdx - 1;
-    setCurrentImagIdx(index);
+    const resetToVeryBack = currentImageIndex === 0;
+    const index = resetToVeryBack ? images.length - 1 : currentImageIndex - 1;
+    setCurrentImageIndex(index);
   };
 
   const nextSlide = () => {
-    const resetIndex = currentImageIdx === images.length - 1;
-    const index = resetIndex ? 0 : currentImageIdx + 1;
-    setCurrentImagIdx(index);
+    const resetIndex = currentImageIndex === images.length - 1;
+    const index = resetIndex ? 0 : currentImageIndex + 1;
+    setCurrentImageIndex(index);
   };
 
-  const activeImageSourcesFromState = images.slice(
-    currentImageIdx,
-    currentImageIdx + 1
+  const activeImageSourcesFromState: PhotoConfig[] = images.slice(
+    currentImageIndex,
+    currentImageIndex + 1
   );
 
   return (
@@ -89,7 +86,7 @@ const ContempoGallery = ({ images, lazy }: GalleryProps) => {
             />
           </span>
         ))}
-        {showOverlay && selectedIndex && (
+        {showOverlay && selectedIndex != null && (
           <Overlay
             onClose={() => setShowOverlay(false)}
             images={images}
